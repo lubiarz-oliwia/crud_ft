@@ -1,0 +1,28 @@
+.actionbuttons_box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-darkblue;
+    width: 100px;
+    border-radius: 5px;
+
+    div {
+        width: 50px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: $color-skyblue;
+        border-radius: 5px;
+
+        &:hover {
+            background-color: $color-alert;
+        }
+
+        p {
+            padding-top: 5px;
+        }
+    }
+}

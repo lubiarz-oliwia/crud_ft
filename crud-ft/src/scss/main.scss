@@ -1,0 +1,18 @@
+@import './settings/colors';
+@import './settings/fonts';
+@import './settings/media';
+
+@import './components/header.scss';
+@import './components/table.scss';
+@import './components/form.scss';
+@import './components/actionbuttons.scss';
+@import './components/deletebox.scss';
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: $font-type-openSans;
+    font-size: $font-size-text;
+}
+
