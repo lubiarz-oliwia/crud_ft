@@ -6,8 +6,9 @@ nav {
     margin-bottom: 20px;
     padding: 0 10px;
 
-    @media #{$gl-xs} {
-        justify-content: space-around;
+    @media #{$gl-xs}, #{$gl-md} {
+        flex-direction: column;
+        padding: 20px;
     }
 
     .searchBox {
@@ -16,11 +17,16 @@ nav {
         width: 300px;
         border-radius: 5px;
 
+        @media #{$gl-xs}, #{$gl-md} {
+            order: 2;
+            margin-top: 5px
+        }
+
         input {
             width: 250px;
             border-radius: 5px;
             background-color: $color-skyblue;
-            
+
             &:focus {
                 background-color: $color-background;
             }
@@ -39,6 +45,11 @@ nav {
 
         li {
             padding: 20px;
+
+            @media #{$gl-xs}, #{$gl-md} {
+                padding: 10px;
+                align-items: center;
+            }
 
             &:hover {
                 background-color: $color-darkblue;

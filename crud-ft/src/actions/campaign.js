@@ -11,13 +11,13 @@ export const getCampaign = (id, successCallback) => {
 };
 
 export const editCampaign = (id, campaign, successCallback) => {
-    fetch(`${API_URL}/campaigns/${id}`,  {
+    fetch(`${API_URL}/campaigns/${id}`, {
         headers: {
-          "Content-Type": "application/json",
+            "Content-Type": "application/json",
         },
         method: "PUT",
         body: JSON.stringify(campaign)
-      })
+    })
         .then(r => r.json())
         .then(data => {
             console.log(data);

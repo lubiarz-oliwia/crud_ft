@@ -1,8 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons'
+import { getAllCampaigns } from '../../actions/campagins';
+import ActionButtons from './ActionButtons';
 
-function Table() {
+function Table({deleteItem, editItem, campaigns}) {
+// const [campaigns, setCampaigns] = useState([]);
+const [showActionButtons, setShowActionButtons] = useState(null);
+
+// useEffect(() => {
+//   getAllCampaigns(setCampaigns)
+// }, [])
+
+function showActionsButtons(id) {
+  setShowActionButtons(id);
+}
+
   return (
     <table>
       <thead>
@@ -17,17 +30,23 @@ function Table() {
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>CES-9000</td>
-          <td>50mt</td>
-          <td>9mm</td>
-          <td>1/2"</td>
-          <td>Kangal / Coil</td>
-          <td>1/2"</td>
-          <td>Kangal / Coil</td>
-          <td><FontAwesomeIcon icon={faEllipsisV} /></td>
-        </tr>
+      <tbody onMouseLeave={setShowActionButtons}>
+          {campaigns.map((item, index) => {
+            return (
+              <tr key={index} onMouseEnter={() => showActionsButtons(item.id)}>
+              <td>{item.campaign_name}</td>
+              <td>{item.keywords}</td>
+              <td>${item.bid_amount}</td>
+              <td>${item.campaign_fund}</td>
+              <td>{item.status}</td>
+              <td>{item.town}</td>
+              <td>{item.radius}</td>
+              <td>
+              {showActionButtons !== item.id ? <FontAwesomeIcon icon={faEllipsisV}/> : <ActionButtons deleteItem={() => deleteItem(item.id)} editItem={()=>editItem(item.id)}/>}
+            </td>
+          </tr>)
+          } )}
+
       </tbody>
     </table>
   )
