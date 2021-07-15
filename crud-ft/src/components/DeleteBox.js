@@ -1,12 +1,12 @@
 import React from 'react'
 
-function DeleteBox() {
+function DeleteBox({onDeleteConfirm, onDeleteCancel}) {
     return (
         <div className="delete_box">
             <h1>Delete an item?</h1>
             <div>
-                <button>No</button>
-                <button>Yes</button>
+                <button onClick={onDeleteCancel}>No</button>
+                <button onClick={onDeleteConfirm}>Yes</button>
             </div>
         </div>
     )

@@ -1,21 +1,26 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faList, faPlusCircle, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faList, faMoneyBill, faPlusCircle, faUser } from '@fortawesome/free-solid-svg-icons'
 import SearchBox from './SearchBox';
 
-function Header() {
+function Header( {showAddForm, showCampaignList, onSearchboxChange, funds} ) {
+
     return (
         <>
             <nav>
-                <SearchBox />
+                <SearchBox onSearchboxChange={onSearchboxChange}/>
                 <ul>
-                    <li>
+                    <li onClick={showAddForm} >
                         <FontAwesomeIcon icon={faPlusCircle} />
                         ADD CAMPAIGN
                     </li>
-                    <li>
+                    <li onClick={showCampaignList} >
                         <FontAwesomeIcon icon={faList} />
                         CAMPAIGN LIST
+                    </li>
+                    <li>
+                        <FontAwesomeIcon icon={faMoneyBill} />
+                        ${funds}
                     </li>
                     <li>
                         <FontAwesomeIcon icon={faUser} />
