@@ -1,54 +1,63 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
+import { useHistory } from "react-router-dom"
 import { addCampaign } from '../actions/campaign'
 import Form from './elements/Form'
 import FormSidebar from './elements/FormSidebar'
-import MainPage from './MainPage'
+import Header from './elements/Header'
+
 const MIN_BID_AMOUNT = 1000;
-function FormAdd({fundsLeft}) {
+
+function FormAdd({ fundsLeft }) {
     const [form, setForm] = useState({ campaign_name: '', keywords: '', bid_amount: '', campaign_fund: '', status: 'on', town: 'Warsaw', radius: '' })
     const [error, setError] = useState({ campaign_name: '', keywords: '', bid_amount: '', campaign_fund: '', status: '', town: '', radius: '' })
-    const [showList, setShowList] = useState(false);
+
+    let history = useHistory();
 
     const validator = (name, value) => {
         switch (name) {
             case 'campaign_name':
-                if(!value) {
+                if (!value) {
                     return 'This field is mandatory';
                 }
                 break;
 
             case 'keywords':
-                if(!value) {
+                if (!value) {
                     return 'This field is mandatory';
                 }
-        
+                break;
+
+            case 'campaign_fund':
+                if (!value) {
+                    return 'This field is mandatory';
+                }
+                break;
+
+            case 'radius':
+                if (!value) {
+                    return 'This field is mandatory';
+                }
+                break;
+
+            case 'bid_amount':
+                if (value < MIN_BID_AMOUNT) {
+                    return 'The min amount is $1000';
+                }
+                break;
+
+            // case 'bid_amount': 
+            // if(!value) {
+            //     return 'This field is mandatory';
+            // }
+            // break;
+
             default:
                 break;
         }
-
-        // if(!bid_amount) {
-        //     errors['bid_amount'] = 'This field is mandatory';
-        // }
-
-        // if(bid_amount < MIN_BID_AMOUNT && bid_amount) {
-        //     errors['bid_amount'] = 'The min amount is $1000';
-        // }
-
-        // if(!campaign_fund) {
-        //     errors['campaign_fund'] = 'This field is mandatory';
-        // }
-
-        // if(!radius.length) {
-        //     errors['radius'] = 'This field is mandatory';
-        // }
-
     }
 
-
     const handleChange = (e) => {
-        const { campaign_name, keywords, bid_amount, campaign_fund, status, town, radius} = form;
-        const {name, value} = e.target;
-        console.log(name, value);
+        const { name, value } = e.target;
         const errors = {};
         setForm(prev => {
             return {
@@ -66,12 +75,11 @@ function FormAdd({fundsLeft}) {
     }
 
     const handleSubmit = (e) => {
-        const { campaign_name, keywords, bid_amount, campaign_fund, status, town, radius} = form;
         e.preventDefault();
 
         const isAnyFieldEmpty = Object.values(form).some(el => el === '');
         if (Object.keys(error) && !isAnyFieldEmpty) {
-            addCampaign(form).then(setShowList(true));
+            addCampaign(form).then(history.push('/'));
         }
 
         if (isAnyFieldEmpty) {
@@ -89,10 +97,20 @@ function FormAdd({fundsLeft}) {
 
     return (
         <>
-        {!showList ? <div className='form_container'>
-            <FormSidebar form_header='Add campaign' onSaveConfirm={handleSubmit} onSaveCancel={setShowList} fundsLeft={fundsLeft-form.campaign_fund}/>
-            <Form handleChange={handleChange} form={form} error={error}/>
-        </div> :  <MainPage/> }
+            <Header />
+            <div className='form_container'>
+                <FormSidebar
+                    form_header='Add campaign'
+                    onSaveConfirm={handleSubmit}
+                    onSaveCancel={() => console.log('push to main')}
+                    fundsLeft={fundsLeft - form.campaign_fund}
+                />
+                <Form
+                    handleChange={handleChange}
+                    form={form}
+                    error={error}
+                />
+            </div>
         </>
     )
 }

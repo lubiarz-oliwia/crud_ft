@@ -3,6 +3,7 @@ import React from 'react'
 function Form({ handleChange, form, error }) {
     const towns = ["Select", "Bydgoszcz", "Gdansk", "Krakow", "Lodz", "Poznan", "Szczecin", "Warsaw", "Wroclaw"];
     const keywords = ['']
+
     return (
         <form>
             <div>
@@ -45,8 +46,8 @@ function Form({ handleChange, form, error }) {
                 {error.town && <p className="error">{error.town}</p>}
             </div>
             <div>
-                <label>Radius</label>
-                <input type="text" name="radius" value={form.radius} onChange={handleChange} />
+                <label>Radius (km)</label>
+                <input type="number" name="radius" value={form.radius} onChange={handleChange} />
                 {error.radius && <p className="error">{error.radius}</p>}
             </div>
         </form>
