@@ -1,119 +1,121 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from "react-router-dom"
 import { editCampaign, getCampaign } from '../actions/campaign'
 import Form from './elements/Form'
 import FormSidebar from './elements/FormSidebar'
-import MainPage from './MainPage';
+import Header from './elements/Header'
 
-function FormEdit({ id }) {
-    const [form, setForm] = useState({ campaign_name: '', keywords: '', bid_amount: '', campaign_fund: '', status: '', town: '', radius: '' });
-    const [error, setError] = useState({ campaign_name: '', keywords: '', bid_amount: '', campaign_fund: '', status: '', town: '', radius: '' })
-    const [showList, setShowList] = useState(false);
+const MIN_BID_AMOUNT = 1000;
+
+function FormEdit({ location }) {
+    const [form, setForm] = useState({ id: '', campaign_name: '', keywords: '', bid_amount: '', campaign_fund: '', status: '', town: '', radius: '' });
+    const [error, setError] = useState({ id: '', campaign_name: '', keywords: '', bid_amount: '', campaign_fund: '', status: '', town: '', radius: '' })
+
+    let history = useHistory();
+    const { state } = location;
 
     useEffect(() => {
-        getCampaign(id, setForm);
+        const { state } = location;
+        getCampaign(state.id, setForm);
     }, [])
+
+    const validator = (name, value) => {
+        switch (name) {
+            case 'campaign_name':
+                if (!value) {
+                    return 'This field is mandatory';
+                }
+                break;
+
+            case 'keywords':
+                if (!value) {
+                    return 'This field is mandatory';
+                }
+                break;
+
+            case 'campaign_fund':
+                if (!value) {
+                    return 'This field is mandatory';
+                }
+                break;
+
+            case 'radius':
+                if (!value) {
+                    return 'This field is mandatory';
+                }
+                break;
+
+            case 'bid_amount':
+                if (value < MIN_BID_AMOUNT) {
+                    return 'The min amount is $1000';
+                }
+                break;
+
+            // case 'bid_amount': 
+            // if(!value) {
+            //     return 'This field is mandatory';
+            // }
+            // break;
+
+            default:
+                break;
+        }
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        console.log(e)
-        setForm(prevState => {
+        const errors = {};
+        setForm(prev => {
             return {
-                ...prevState,
+                ...prev,
                 [name]: value
             }
         });
-    };
+
+        errors[name] = validator(name, value);
+
+        setError((prevState) => ({
+            ...prevState,
+            ...errors,
+        }));
+    }
 
     const handleSubmit = (e) => {
-        const { campaign_name, keywords, bid_amount, campaign_fund, status, town, radius } = form;
         e.preventDefault();
-        setError({});
-        let isError = false;
 
-        if (!campaign_name.length) {
-            setError(prev => {
-                return {
-                    ...prev,
-                    campaign_name: 'This field is mandatory'
-                }
-            })
-            isError = true;
+        const isAnyFieldEmpty = Object.values(form).some(el => el === '');
+        if (Object.keys(error) && !isAnyFieldEmpty) {
+            editCampaign(state.id, form, setForm);
+            history.push('/');
         }
 
-        if (!keywords.length) {
-            setError(prev => {
-                return {
-                    ...prev,
-                    keywords: 'This field is mandatory'
-                }
-            })
-            isError = true;
-        }
+        if (isAnyFieldEmpty) {
+            const errors = {};
+            Object.keys(form).forEach((el) => {
+                errors[el] = validator(el, form[el]);
+            });
 
-        if (!bid_amount.length) {
-            setError(prev => {
-                return {
-                    ...prev,
-                    bid_amount: 'This field is mandatory'
-                }
-            })
-            isError = true;
+            setError((prevState) => ({
+                ...prevState,
+                ...errors,
+            }));
         }
-
-        if (bid_amount < 1000 && bid_amount.length > 0) {
-            setError(prev => {
-                return {
-                    ...prev,
-                    bid_amount: 'The min amount is $1000'
-                }
-            })
-            isError = true;
-        }
-
-        if (!campaign_fund.length) {
-            setError(prev => {
-                return {
-                    ...prev,
-                    campaign_fund: 'This field is mandatory'
-                }
-            })
-            isError = true;
-        }
-
-        if (radius.length === 0) {
-            setError(prev => {
-                return {
-                    ...prev,
-                    radius: 'This field is mandatory'
-                }
-            })
-            isError = true;
-        }
-
-        if (!radius.includes('km') && radius.length > 0) {
-            setError(prev => {
-                return {
-                    ...prev,
-                    radius: 'This field should be in km'
-                }
-            })
-            isError = true;
-        }
-
-        if (!isError) {
-            editCampaign(id, form, setForm);
-            setShowList(true)
-        }
-
-        console.log(form);
     }
 
     return (
         <>
-            {!showList ? <div className='form_container'>
-                <FormSidebar form_header='Edit campaign' onSaveConfirm={handleSubmit} onSaveCancel={setShowList} />
-                <Form handleChange={handleChange} form={form} error={error} />
-            </div> : <MainPage />}
+            <Header />
+            <div className='form_container'>
+                <FormSidebar
+                    form_header='Edit campaign'
+                    onSaveConfirm={handleSubmit}
+                />
+                <Form
+                    handleChange={handleChange}
+                    form={form}
+                    error={error}
+                />
+            </div>
         </>
     )
 }

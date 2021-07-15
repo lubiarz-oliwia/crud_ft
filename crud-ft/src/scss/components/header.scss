@@ -51,6 +51,11 @@ nav {
                 align-items: center;
             }
 
+            a{
+                text-decoration: none;
+                color: $color-alert;
+            }
+
             &:hover {
                 background-color: $color-darkblue;
                 color: $color-skyblue;

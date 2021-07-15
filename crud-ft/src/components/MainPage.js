@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { getAllCampaigns } from '../actions/campagins';
-import { deleteCampaign } from '../actions/campaign';
-import DeleteBox from './DeleteBox';
+import { useHistory } from "react-router-dom"
+import { getAllCampaigns } from '../actions/campagins'
+import { deleteCampaign } from '../actions/campaign'
+import DeleteBox from './DeleteBox'
 import Header from './elements/Header'
 import Table from './elements/Table'
-import FormAdd from './FormAdd';
-import FormEdit from './FormEdit';
+
 
 function MainPage() {
-    let funds = 700000
-    const [addFormIsShown, setAddFormIsShown] = useState(false);
-    const [itemToBeDeletedId, setitemToBeDeletedId] = useState(null);
-    const [itemToBeEditedId, setItemToBeEdited] = useState(null);
+    let history = useHistory();
     const [campaigns, setCampaigns] = useState([]);
+    const [itemToBeDeletedId, setitemToBeDeletedId] = useState(null);
     const [campaignsFiltered, setCampaignsFiltered] = useState([]);
 
     const wrapperfunc = (allCampaigns) => {
@@ -28,26 +26,28 @@ function MainPage() {
         setitemToBeDeletedId(id);
     }
 
-    function itemToBeEditedIds(id) {
-        setItemToBeEdited(id);
-        console.log(id);
-    }
-
     function deleteItem(id) {
         deleteCampaign(id);
         setitemToBeDeletedId(null);
+        getAllCampaigns(wrapperfunc);
+    }
+
+    const editItem = (id) => {
+        const location = {
+            pathname: `/editCampaign/${id}`,
+            state: { id }
+        };
+        history.push(location);
     }
 
     const filter = (searchText) => {
         let chosenCampaing = campaigns;
-        // if (searchText) {
-            chosenCampaing = campaigns.filter((el) => {
-                const { campaign_name, town } = el;
-                if (campaign_name && town)
-                    return campaign_name.toLowerCase().includes(searchText.toLowerCase()) || town.toLowerCase().includes(searchText.toLowerCase());
-                return false;
-            });
-        // }
+        chosenCampaing = campaigns.filter((el) => {
+            const { campaign_name, town } = el;
+            if (campaign_name && town)
+                return campaign_name.toLowerCase().includes(searchText.toLowerCase()) || town.toLowerCase().includes(searchText.toLowerCase());
+            return false;
+        });
         setCampaignsFiltered(chosenCampaing);
         if (searchText.length <= 1) {
             setCampaignsFiltered(campaigns)
@@ -57,22 +57,19 @@ function MainPage() {
     return (
         <>
             <Header
-                showAddForm={setAddFormIsShown}
-                // showCampaignList={setListIsShown}
                 onSearchboxChange={filter}
-                funds={funds}
             />
-            {itemToBeDeletedId ? <DeleteBox onDeleteConfirm={() => deleteItem(itemToBeDeletedId)} onDeleteCancel={() => (setitemToBeDeletedId(null))} /> : null}
-            {itemToBeEditedId ? <FormEdit id={itemToBeEditedId} /> : null}
-            {addFormIsShown && !itemToBeEditedId && !itemToBeDeletedId ? <FormAdd fundsLeft={funds}/> : null}
-            {!addFormIsShown && (!itemToBeDeletedId && !itemToBeEditedId) ? 
-            <Table 
-            deleteItem={(id) => itemToBeDeletedIds(id)} 
-            editItem={(id) => itemToBeEditedIds(id)} 
-            campaigns={campaignsFiltered} 
-            /> 
-            : 
-            null}
+            {itemToBeDeletedId ?
+                <DeleteBox
+                    onDeleteConfirm={() => deleteItem(itemToBeDeletedId)}
+                    onDeleteCancel={() => (setitemToBeDeletedId(null))}
+                />
+                :
+                <Table
+                    deleteItem={(id) => itemToBeDeletedIds(id)}
+                    editItem={(id) => editItem(id)}
+                    campaigns={campaignsFiltered}
+                />}
         </>
     )
 }
