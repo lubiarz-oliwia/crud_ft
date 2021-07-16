@@ -18,7 +18,7 @@ General information:
 - The project uses Sass. 
 - The project includes a form with controlled fields.
 - The application sends [API](https://crud-ft-backend.herokuapp.com/) query libraries using fetch.
-  github_version: https://github.com/lubiarz-oliwia/crud_ft_backend/
+- The github_version: https://github.com/lubiarz-oliwia/crud_ft_backend/
 - The app is available in the Live version (Heroku).
 
 # Technologies Used
