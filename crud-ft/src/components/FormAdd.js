@@ -1,60 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from "react-router-dom"
 import { addCampaign } from '../actions/campaign'
+import { editUserData, getUserData } from '../actions/user'
+import { validator } from '../actions/validator'
 import Form from './elements/Form'
 import FormSidebar from './elements/FormSidebar'
 import Header from './elements/Header'
 
-const MIN_BID_AMOUNT = 1000;
-
-function FormAdd({ fundsLeft }) {
+function FormAdd() {
     const [form, setForm] = useState({ campaign_name: '', keywords: '', bid_amount: '', campaign_fund: '', status: 'on', town: 'Warsaw', radius: '' })
     const [error, setError] = useState({ campaign_name: '', keywords: '', bid_amount: '', campaign_fund: '', status: '', town: '', radius: '' })
-
+    const [userData, setUserData] = useState({ id: '', login: '', account: '' });
     let history = useHistory();
 
-    const validator = (name, value) => {
-        switch (name) {
-            case 'campaign_name':
-                if (!value) {
-                    return 'This field is mandatory';
-                }
-                break;
+    useEffect(() => {
+        getUserData(setUserData)
+    }, []);
 
-            case 'keywords':
-                if (!value) {
-                    return 'This field is mandatory';
-                }
-                break;
+    const { id } = userData;
 
-            case 'campaign_fund':
-                if (!value) {
-                    return 'This field is mandatory';
-                }
-                break;
+    let data = { ...userData, account: userData.account - form.campaign_fund }
 
-            case 'radius':
-                if (!value) {
-                    return 'This field is mandatory';
-                }
-                break;
-
-            case 'bid_amount':
-                if (value < MIN_BID_AMOUNT) {
-                    return 'The min amount is $1000';
-                }
-                break;
-
-            // case 'bid_amount': 
-            // if(!value) {
-            //     return 'This field is mandatory';
-            // }
-            // break;
-
-            default:
-                break;
-        }
-    }
+    validator();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -80,6 +47,7 @@ function FormAdd({ fundsLeft }) {
         const isAnyFieldEmpty = Object.values(form).some(el => el === '');
         if (Object.keys(error) && !isAnyFieldEmpty) {
             addCampaign(form).then(history.push('/'));
+            editUserData(id, data)
         }
 
         if (isAnyFieldEmpty) {
@@ -93,6 +61,11 @@ function FormAdd({ fundsLeft }) {
                 ...errors,
             }));
         }
+
+    }
+
+    const onSaveCancel = () => {
+        history.push('/');
     }
 
     return (
@@ -102,8 +75,8 @@ function FormAdd({ fundsLeft }) {
                 <FormSidebar
                     form_header='Add campaign'
                     onSaveConfirm={handleSubmit}
-                    onSaveCancel={() => console.log('push to main')}
-                    fundsLeft={fundsLeft - form.campaign_fund}
+                    onSaveCancel={onSaveCancel}
+                    campaignCost={form.campaign_fund}
                 />
                 <Form
                     handleChange={handleChange}

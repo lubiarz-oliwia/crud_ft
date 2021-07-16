@@ -1,17 +1,16 @@
 import { API_URL } from "./constants"
 
 export const getCampaign = (id, successCallback) => {
-    fetch(`${API_URL}/campaigns/${id}`)
+    return fetch(`${API_URL}/campaigns/${id}`)
         .then(r => r.json())
         .then(data => {
-            console.log(data);
             successCallback(data);
         })
         .catch(err => console.log(err));
 };
 
 export const editCampaign = (id, campaign, successCallback) => {
-    fetch(`${API_URL}/campaigns/${id}`, {
+    return fetch(`${API_URL}/campaigns/${id}`, {
         headers: {
             "Content-Type": "application/json",
         },
@@ -20,7 +19,6 @@ export const editCampaign = (id, campaign, successCallback) => {
     })
         .then(r => r.json())
         .then(data => {
-            console.log(data);
             successCallback(data);
         })
         .catch(err => console.log(err));

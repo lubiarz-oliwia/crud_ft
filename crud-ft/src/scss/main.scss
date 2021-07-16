@@ -7,12 +7,13 @@
 @import './components/form.scss';
 @import './components/actionbuttons.scss';
 @import './components/deletebox.scss';
+@import './components/user.scss';
 
 * {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    font-family: $font-type-openSans;
+    font-family: $font-type-Roboto;
     font-size: $font-size-text;
 }
 
