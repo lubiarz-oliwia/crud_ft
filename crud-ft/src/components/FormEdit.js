@@ -77,7 +77,9 @@ function FormEdit({ history }) {
 
     return (
         <>
-            <Header />
+            <Header 
+            onSearchboxChange={() => {}}
+            />
             <div className='form_container'>
                 <FormSidebar
                     form_header='Edit campaign'
