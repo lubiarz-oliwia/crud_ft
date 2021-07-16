@@ -18,7 +18,7 @@ General information:
 - The project uses Sass. 
 - The project includes a form with controlled fields.
 - The application sends [API](https://crud-ft-backend.herokuapp.com/) query libraries using fetch.
-  [github version] (https://github.com/lubiarz-oliwia/crud_ft_backend/)
+  [github_version] (https://github.com/lubiarz-oliwia/crud_ft_backend/)
 - The app is available in the Live version (Heroku).
 
 # Technologies Used
@@ -28,8 +28,8 @@ General information:
 
 # Features
 - Sellers to enter the following information for each campaign:
-• Campaign name (mandatory)
-• Keywords (mandatory)
+-- Campaign name (mandatory)
+-- Keywords (mandatory)
 • Bid amount (mandatory, min amount )
 • Campaign fund (mandatory and deducted from their Emerald account 
 funds, new balance updated on screen
