@@ -46,8 +46,10 @@ function FormAdd() {
 
         const isAnyFieldEmpty = Object.values(form).some(el => el === '');
         if (Object.keys(error) && !isAnyFieldEmpty) {
-            addCampaign(form).then(history.push('/'));
-            editUserData(id, data)
+            addCampaign(form).then(() => {
+                (history.push('/'));
+                editUserData(id, data)
+            })
         }
 
         if (isAnyFieldEmpty) {
@@ -61,7 +63,6 @@ function FormAdd() {
                 ...errors,
             }));
         }
-
     }
 
     const onSaveCancel = () => {
@@ -70,8 +71,8 @@ function FormAdd() {
 
     return (
         <>
-            <Header 
-            onSearchboxChange={() => {}}
+            <Header
+                onSearchboxChange={() => { }}
             />
             <div className='form_container'>
                 <FormSidebar

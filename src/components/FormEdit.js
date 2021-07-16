@@ -13,7 +13,7 @@ function FormEdit({ history }) {
     const [finalCampaigncost, setFinalCampaignCost] = useState(0);
 
     const { state } = history.location;
-    
+
     useEffect(() => {
         getCampaign(state.id, setForm);
         getUserData(setUserData)
@@ -32,7 +32,7 @@ function FormEdit({ history }) {
         if (name === 'campaign_fund') {
             setFinalCampaignCost(value);
         }
-        
+
         setForm(prev => {
             return {
                 ...prev,
@@ -53,9 +53,10 @@ function FormEdit({ history }) {
 
         const isAnyFieldEmpty = Object.values(form).some(el => el === '');
         if (Object.keys(error) && !isAnyFieldEmpty) {
-            editCampaign(state.id, form, setForm);
-            history.push('/');
-            editUserData(id, data)
+            editCampaign(state.id, form, setForm).then(() => {
+                (history.push('/'));
+                editUserData(id, data)
+            })
         }
 
         if (isAnyFieldEmpty) {
@@ -77,8 +78,8 @@ function FormEdit({ history }) {
 
     return (
         <>
-            <Header 
-            onSearchboxChange={() => {}}
+            <Header
+                onSearchboxChange={() => { }}
             />
             <div className='form_container'>
                 <FormSidebar
