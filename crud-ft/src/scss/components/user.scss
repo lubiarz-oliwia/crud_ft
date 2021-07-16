@@ -1,0 +1,66 @@
+.user_container,
+.user_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border: solid 1px $color-darkblue;
+    border-radius: 5px;
+    margin: 50px 250px;
+    padding: 50px 100px;
+    background-color: $color-darkblue;
+
+    @media #{$gl-xs},
+    #{$gl-md} {
+        margin: 10px 20px;
+    }
+
+    h1 {
+        color: $color-skyblue;
+        padding: 20px 0;
+        font-size: $font-size-text;
+    }
+
+    p {
+        color: $color-alert;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    input {
+        color: $color-alert;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+    }
+}
+
+.edit_button {
+    padding: 10px 20px;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: $color-darkblue;
+    background-color: $color-alert;
+    border-radius: 5px;
+    outline: none;
+    width: 200px;
+    border: 1px $color-skyblue solid;
+
+    &:hover {
+        background-color: $color-skyblue;
+    }
+}
+
+.save_button {
+    padding: 10px 20px;
+    margin-top: 40px;
+    border-radius: 5px;
+    outline: none;
+    color: $color-skyblue;
+    background-color: $color-darkblue;
+    border: $color-alert 1px solid;
+    width: 200px;
+}

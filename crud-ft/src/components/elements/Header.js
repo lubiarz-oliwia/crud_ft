@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faList, faMoneyBill, faPlusCircle, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faList, faPlusCircle, faUser } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom"
 import SearchBox from './SearchBox'
 
@@ -10,7 +10,7 @@ function Header({ onSearchboxChange }) {
             <nav>
                 <SearchBox onSearchboxChange={onSearchboxChange} />
                 <ul>
-                    <li >
+                    <li>
                         <Link to='/addCampaign'>
                             <FontAwesomeIcon icon={faPlusCircle} />
                         ADD CAMPAIGN
@@ -21,10 +21,6 @@ function Header({ onSearchboxChange }) {
                             <FontAwesomeIcon icon={faList} />
                         CAMPAIGN LIST
                         </Link>
-                    </li>
-                    <li>
-                        <FontAwesomeIcon icon={faMoneyBill} />
-                        $
                     </li>
                     <li>
                         <Link to='user'>

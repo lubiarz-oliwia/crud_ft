@@ -6,7 +6,8 @@ nav {
     margin-bottom: 20px;
     padding: 0 10px;
 
-    @media #{$gl-xs}, #{$gl-md} {
+    @media #{$gl-xs},
+    #{$gl-md} {
         flex-direction: column;
         padding: 20px;
     }
@@ -17,7 +18,8 @@ nav {
         width: 300px;
         border-radius: 5px;
 
-        @media #{$gl-xs}, #{$gl-md} {
+        @media #{$gl-xs},
+        #{$gl-md} {
             order: 2;
             margin-top: 5px
         }
@@ -46,18 +48,26 @@ nav {
         li {
             padding: 20px;
 
-            @media #{$gl-xs}, #{$gl-md} {
+            @media #{$gl-xs},
+            #{$gl-md} {
                 padding: 10px;
                 align-items: center;
             }
 
-            a{
+            a {
                 text-decoration: none;
-                color: $color-alert;
+                color: $color-darkblue;
+                padding: 20px;
+
+                @media #{$gl-xs},
+                #{$gl-md} {
+                    padding: 10px;
+                    align-items: center;
+                }
             }
 
             &:hover {
-                background-color: $color-darkblue;
+                background-color: $color-alert;
                 color: $color-skyblue;
                 border-radius: 5px;
             }

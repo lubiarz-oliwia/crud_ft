@@ -6,7 +6,6 @@ import DeleteBox from './DeleteBox'
 import Header from './elements/Header'
 import Table from './elements/Table'
 
-
 function MainPage() {
     let history = useHistory();
     const [campaigns, setCampaigns] = useState([]);

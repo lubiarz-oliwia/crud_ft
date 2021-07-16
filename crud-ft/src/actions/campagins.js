@@ -1,7 +1,7 @@
 import { API_URL } from "./constants"
 
 export const getAllCampaigns = (successCallback) => {
-  fetch(`${API_URL}/campaigns`)
+  return fetch(`${API_URL}/campaigns`)
     .then(r => r.json())
     .then(data => {
       successCallback(data);

@@ -2,7 +2,6 @@ import React from 'react'
 
 function Form({ handleChange, form, error }) {
     const towns = ["Select", "Bydgoszcz", "Gdansk", "Krakow", "Lodz", "Poznan", "Szczecin", "Warsaw", "Wroclaw"];
-    const keywords = ['']
 
     return (
         <form>
