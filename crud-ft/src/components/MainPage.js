@@ -26,9 +26,10 @@ function MainPage() {
     }
 
     function deleteItem(id) {
-        deleteCampaign(id);
-        setitemToBeDeletedId(null);
-        getAllCampaigns(wrapperfunc);
+        deleteCampaign(id).then(() => {
+            setitemToBeDeletedId(null);
+            getAllCampaigns(wrapperfunc);
+        })
     }
 
     const editItem = (id) => {

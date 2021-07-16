@@ -70,7 +70,9 @@ function FormAdd() {
 
     return (
         <>
-            <Header />
+            <Header 
+            onSearchboxChange={() => {}}
+            />
             <div className='form_container'>
                 <FormSidebar
                     form_header='Add campaign'
