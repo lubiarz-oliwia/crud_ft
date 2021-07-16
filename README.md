@@ -17,9 +17,8 @@ General information:
 - The design is styled in a modern and refined way.
 - The project uses Sass. 
 - The project includes a form with controlled fields.
-- The application sends API query libraries using fetch.
-  [_here_](https://crud-ft-backend.herokuapp.com/)
-  [_here_] (https://github.com/lubiarz-oliwia/crud_ft_backend)
+- The application sends [API](https://crud-ft-backend.herokuapp.com/) query libraries using fetch.
+  [github version] (https://github.com/lubiarz-oliwia/crud_ft_backend/)
 - The app is available in the Live version (Heroku).
 
 # Technologies Used
